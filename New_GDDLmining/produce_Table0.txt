@@ -1,0 +1,5 @@
+(0:x0).id;;(0:x0).Name;;(1:y0).id;;(1:y0).Name;;(1:y0).Genre;;(1:y0).Year;;(1:y0).Price;;(1:y1).id;;(1:y1).Name;;(1:y1).Genre;;(1:y1).Year
+1;;GL;;4;;AF9;;Racing;;2018;;50;;5;;AF11;;Racing;;2018
+3;;EA;;7;;F20;;Soccer;;2019;;55;;8;;F20;;Soccer;;2019
+3;;EA;;7;;F20;;Soccer;;2019;;55;;9;;F21;;Soccer;;2020
+3;;EA;;8;;F20;;Soccer;;2019;;60;;9;;F21;;Soccer;;2020
