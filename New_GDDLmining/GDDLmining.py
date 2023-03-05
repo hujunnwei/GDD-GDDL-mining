@@ -512,6 +512,7 @@ def RHS():
     id_position = []
     rhs_set = dict()
     ary = []
+    aary = []
     left = []
     right = []
     with open('produce_Table0.txt', 'r', encoding='utf-8') as f:
@@ -526,8 +527,11 @@ def RHS():
                     # rhs_set[id_set[i]] = []
                 i += 1
             else:
+                aary = []
                 line = line.strip('\n').split(';;')
-                ary.append(line)
+                for i in range(0, len(id_position)):
+                    aary.append(line[id_position[i]])
+                ary.append(aary)
 
     with open('real_truth_fu.txt', 'r', encoding='utf-8') as f:
         for line in f:
@@ -546,20 +550,44 @@ def RHS():
             t = left[i]
             left[i] = right[i]
             right[i] = t
+
     rhs = ""
+    m = []
+    n = []
     for i in range(len(ary)):
         for j in range(len(left)):
-            if left[j] in ary[i] and right[j] in ary[i]:
-                m = ary[i].index(left[j])
-                n = ary[i].index(right[j])
-                m = id_position.index(m)
-                n = id_position.index(n)
-                rhs = id_set[m] + '=' + id_set[n]
+            if left[j] in ary[i]:
+                m = [p for p, q in enumerate(ary[i]) if q == left[j]]
+            if right[j] in ary[i]:
+                n = [p for p, q in enumerate(ary[i]) if q == right[j]]
+            if len(m) == len(n) and len(m) == 1:
+                if m[0] > n[0]:
+                    t = m[0]
+                    m[0] = n[0]
+                    n[0] = t
+                rhs = id_set[m[0]] + '=' + id_set[n[0]]
                 if rhs not in rhs_set.keys():
                     rhs_set[rhs] = []
                     rhs_set[rhs].append(i)
                 else:
                     rhs_set[rhs].append(i)
+            if len(m) == 2:
+                rhs = id_set[m[0]] + '=' + id_set[m[1]]
+                if rhs not in rhs_set.keys():
+                    rhs_set[rhs] = []
+                    rhs_set[rhs].append(i)
+                else:
+                    rhs_set[rhs].append(i)
+            if len(n) == 2:
+                rhs = id_set[n[0]] + '=' + id_set[n[1]]
+                if rhs not in rhs_set.keys():
+                    rhs_set[rhs] = []
+                    rhs_set[rhs].append(i)
+                else:
+                    rhs_set[rhs].append(i)
+            m = []
+            n = []
+
     if len(rhs_set) == 1:
         item = GDD.iteml(rhs, 0, rhs_set[rhs], 0.0)
         return item
